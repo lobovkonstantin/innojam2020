@@ -19,7 +19,7 @@ public class Object : MonoBehaviour, IPooledObject
 
     void Start()
     {
-        shelf = GameObject.FindGameObjectWithTag("shelf").GetComponent<Collider2D>();
+        shelf = GameObject.FindGameObjectWithTag("uppershelf").GetComponent<Collider2D>();
     }
 
     public void OnObjectSpawn() {
@@ -50,7 +50,7 @@ public class Object : MonoBehaviour, IPooledObject
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "shelf" && !OnShelf) {
+        if (other.gameObject.tag == "uppershelf" && !OnShelf) {
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>(), true);
         }
     }

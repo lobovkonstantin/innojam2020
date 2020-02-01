@@ -7,6 +7,11 @@ TagManager:
   - shelf
   - droppable
   - wall
+  - uppershelf
+  - lowershelf
+  - table
+  - ground
+  - windowsilk
   layers:
   - Default
   - TransparentFX
