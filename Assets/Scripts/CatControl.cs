@@ -120,12 +120,12 @@ public class CatControl : MonoBehaviour
     {
         if (value) 
         {
-            Debug.Log("Ignore collisions!");
+            // Debug.Log("Ignore collisions!");
             Physics2D.IgnoreLayerCollision(catLayer, floorLayer, true);
         }
         else
         {
-            Debug.Log("Stop ignoring collisions!");
+            // Debug.Log("Stop ignoring collisions!");
             Physics2D.IgnoreLayerCollision(catLayer, floorLayer, false);
         }
         

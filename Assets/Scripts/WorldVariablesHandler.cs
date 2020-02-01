@@ -25,9 +25,9 @@ public  class WorldVariablesHandler : MonoBehaviour
          time = 20f;
          levelNumber = 1;
          Instance = this;
-         ArrayList predicateList = arrGen.ListGenerate(@"Assets\\Resources\\PredicateList.txt");
-         ArrayList adjectiveList1 = arrGen.ListGenerate(@"Assets\\Resources\\Adjective1List.txt");
-         ArrayList adjectiveList2 = arrGen.ListGenerate(@"Assets\\Resources\\Adjective2List.txt");
+         ArrayList predicateList = arrGen.ListGenerate(@"Assets/Resources/PredicateList.txt");
+         ArrayList adjectiveList1 = arrGen.ListGenerate(@"Assets/Resources/Adjective1List.txt");
+         ArrayList adjectiveList2 = arrGen.ListGenerate(@"Assets/Resources/Adjective2List.txt");
     }
 
     public void NextLevel()
