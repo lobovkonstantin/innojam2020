@@ -43,7 +43,7 @@ public  class WorldVariablesHandler : MonoBehaviour
         }
         else
         {
-            time = 20;
+            time = 3;
             NextLevel();
         }
     }

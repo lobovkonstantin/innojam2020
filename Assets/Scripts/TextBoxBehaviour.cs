@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class TextBoxBehaviour : MonoBehaviour
 {
-    InputField inputFieldField;
     void Start()
     {
         
@@ -15,18 +15,23 @@ public class TextBoxBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        EventSystem.current.SetSelectedGameObject(GetComponent<InputField>().gameObject, null);
+        GetComponent<InputField>().OnPointerClick(new PointerEventData(EventSystem.current));
+
+        validateAnswer();
     }
 
     void validateAnswer()
     {
-        if (Input.GetKey(KeyCode.KeypadEnter))
-        {
-            String userAnswer = inputFieldField.text;
-            if (WorldVariablesHandler.Instance.nameList.Contains(userAnswer))
-            {
-                Debug.Log("Item has been repaired!");
-            }
-        }
+         if (GetComponent<InputField>().isFocused && GetComponent<InputField>().text != "" && Input.GetKey(KeyCode.Return))
+         {
+             String userAnswer = GetComponent<InputField>().text;
+             Debug.Log(userAnswer);
+             if (WorldVariablesHandler.Instance.nameList.Contains(userAnswer))
+             {
+                 Debug.Log("Item has been repaired!");
+                 GetComponent<InputField>().text = "";
+             }
+         }
     }
 }
