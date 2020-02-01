@@ -26,7 +26,7 @@ public class CatControl : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator anim;
-    int catLayer, floorLayer;
+    int catLayer, floorLayer, droppablesLayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +40,9 @@ public class CatControl : MonoBehaviour
 
         catLayer = LayerMask.NameToLayer("CatLayer");
         floorLayer = LayerMask.NameToLayer("Default");
+        droppablesLayer = LayerMask.NameToLayer("Droppables");
+
+        Physics2D.IgnoreLayerCollision(catLayer, droppablesLayer, true);
 
         timeToNextJump = Random.Range(1, 10);
     }
@@ -75,7 +78,7 @@ public class CatControl : MonoBehaviour
         if (timeToNextJump <= 0) 
         {
             timeToNextJump = Random.Range(1, 10);
-            if (!UNPASSABLE_OBJECT_TAGS.Contains(hit.collider.tag))
+            if (!UNPASSABLE_OBJECT_TAGS.Contains(hit.collider.tag) && !isJumping)
             {
                 jump();
             }
@@ -104,6 +107,8 @@ public class CatControl : MonoBehaviour
 
         if (collision.gameObject.tag == "droppable")
         {
+            Debug.Log("Collided with a droppable!");
+            collision.gameObject.layer = LayerMask.NameToLayer("Droppables");
             delay = 1f;
 
             Object myvase = collision.GetComponent<Object>();

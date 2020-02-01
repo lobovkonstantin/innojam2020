@@ -14,13 +14,19 @@ public class Object : MonoBehaviour, IPooledObject
 
     public float sideForce = .15f;
 
-    public Collider2D shelf;
+    public Collider2D uppershelf;
+    public Collider2D lowershelf;
+    public Collider2D table;
+    public Collider2D windowsilk;
 
     private String itemName;
 
     void Start()
     {
-        shelf = GameObject.FindGameObjectWithTag("shelf").GetComponent<Collider2D>();
+        uppershelf = GameObject.FindGameObjectWithTag("uppershelf").GetComponent<Collider2D>();
+        lowershelf = GameObject.FindGameObjectWithTag("lowershelf").GetComponent<Collider2D>();
+        table = GameObject.FindGameObjectWithTag("table").GetComponent<Collider2D>();
+        windowsilk = GameObject.FindGameObjectWithTag("windowsilk").GetComponent<Collider2D>();
         itemName = NameGenerator.nameGenerate( WorldVariablesHandler.Instance.GetPredicateList(),
             WorldVariablesHandler.Instance.GetAdjectiveList1(),
             WorldVariablesHandler.Instance.GetAdjectiveList2(),
@@ -40,10 +46,13 @@ public class Object : MonoBehaviour, IPooledObject
 
         Vector2 force = new Vector2(xForce, yForce);
         GetComponent<Rigidbody2D>().velocity = force;
-        if (shelf == null) {
+        if (uppershelf == null) {
             return;
         }
-        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shelf, true);
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), uppershelf, true);
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), lowershelf, true);
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), table, true);
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), windowsilk, true);
     }
 
     void Update()
@@ -55,7 +64,7 @@ public class Object : MonoBehaviour, IPooledObject
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "shelf" && !OnShelf) {
+        if (other.gameObject.tag == "uppershelf" && !OnShelf) {
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>(), true);
         }
         if (other.gameObject.tag == "floor") {

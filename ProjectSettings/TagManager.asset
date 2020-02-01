@@ -12,6 +12,7 @@ TagManager:
   - table
   - ground
   - windowsilk
+  - cat
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - 
   - CatLayer
   - Ground
-  - 
+  - Droppables
   - 
   - 
   - 
