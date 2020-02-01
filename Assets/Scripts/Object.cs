@@ -39,6 +39,7 @@ public class Object : MonoBehaviour, IPooledObject
             WorldVariablesHandler.Instance.GetAdjectiveList2(),
             tag);
         WorldVariablesHandler.Instance.nameList.AddLast(itemName);
+        Debug.Log(itemName);
     }
 
     void Update()
