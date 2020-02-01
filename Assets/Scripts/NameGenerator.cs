@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 public  class NameGenerator
 {
@@ -12,8 +12,6 @@ public  class NameGenerator
 
         int levelnumber = WorldVariablesHandler.Instance.getLevel();
 
-        Random randomNubmer = new Random();
-
         if (levelnumber <= 10)
         {
             itemName = tag;
@@ -22,20 +20,19 @@ public  class NameGenerator
 
         if (levelnumber <= 20 && levelnumber > 10)
         {
-            itemName = tag + " " + (string)PredicateList[randomNubmer.Next(PredicateList.Count)];
+            itemName = tag + " " + (string)PredicateList[Random.Range(0, PredicateList.Count)];
 
         }
 
         if (levelnumber <= 30 && levelnumber > 20)
         {
-            itemName = (string)AdjectiveList1[randomNubmer.Next(AdjectiveList1.Count)] + " " +  tag  + " " + (string)PredicateList[randomNubmer.Next(PredicateList.Count)];
+            itemName = (string)AdjectiveList1[Random.Range(0, AdjectiveList1.Count)] + " " +  tag  + " " + (string)PredicateList[Random.Range(0, PredicateList.Count)];
 
         }
 
         if (levelnumber > 30)
         {
-            itemName = (string)AdjectiveList2[randomNubmer.Next(AdjectiveList2.Count)] + " " +(string)AdjectiveList1[randomNubmer.Next(AdjectiveList1.Count)] + " " + tag + " " + (string)PredicateList[randomNubmer.Next(PredicateList.Count)];
-
+            itemName = (string)AdjectiveList2[Random.Range(0, AdjectiveList2.Count)] + " " +(string)AdjectiveList1[Random.Range(0, AdjectiveList1.Count)] + " " + tag + " " + (string)PredicateList[Random.Range(0, PredicateList.Count)];
         }
 
 

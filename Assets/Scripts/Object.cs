@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Object : MonoBehaviour, IPooledObject
 {
+    public int index { get; set; }
     public string tag;
     public bool OnShelf { get; set; }
 
@@ -15,11 +16,17 @@ public class Object : MonoBehaviour, IPooledObject
 
     public Collider2D shelf;
 
-    public String itemName;
+    private String itemName;
 
     void Start()
     {
         shelf = GameObject.FindGameObjectWithTag("shelf").GetComponent<Collider2D>();
+        itemName = NameGenerator.nameGenerate( WorldVariablesHandler.Instance.GetPredicateList(),
+            WorldVariablesHandler.Instance.GetAdjectiveList1(),
+            WorldVariablesHandler.Instance.GetAdjectiveList2(),
+            tag);
+        WorldVariablesHandler.Instance.nameList.AddLast(itemName);
+        Debug.Log(itemName);
     }
 
     public void OnObjectSpawn() {
@@ -33,12 +40,10 @@ public class Object : MonoBehaviour, IPooledObject
 
         Vector2 force = new Vector2(xForce, yForce);
         GetComponent<Rigidbody2D>().velocity = force;
+        if (shelf == null) {
+            return;
+        }
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shelf, true);
-        itemName = NameGenerator.nameGenerate( WorldVariablesHandler.Instance.GetPredicateList(),
-            WorldVariablesHandler.Instance.GetAdjectiveList1(),
-            WorldVariablesHandler.Instance.GetAdjectiveList2(),
-            tag);
-        WorldVariablesHandler.Instance.nameList.AddLast(itemName);
     }
 
     void Update()
@@ -52,6 +57,9 @@ public class Object : MonoBehaviour, IPooledObject
     {
         if (other.gameObject.tag == "shelf" && !OnShelf) {
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>(), true);
+        }
+        if (other.gameObject.tag == "floor") {
+
         }
     }
 

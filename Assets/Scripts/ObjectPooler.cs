@@ -36,7 +36,7 @@ public class ObjectPooler : MonoBehaviour
     }
 
 
-    public IPooledObject SpawnFromPool(string tag, Vector2 position, Quaternion rotation) {
+    public IPooledObject SpawnFromPool(string tag, Vector2 position, Quaternion rotation, int index) {
         if (!poolDictionary.ContainsKey(tag) || poolDictionary[tag].Count == 0) {
             return null; 
         }
@@ -48,7 +48,8 @@ public class ObjectPooler : MonoBehaviour
 
         IPooledObject pooled = objToSpawn.GetComponent<IPooledObject>();
         if (pooled != null) {
-            pooled.OnObjectSpawn();   
+            pooled.index = index;
+            pooled.OnObjectSpawn();
         }
 
         return pooled;
