@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 114843341505885628}
   m_Layer: 0
   m_Name: glass
-  m_TagString: Untagged
+  m_TagString: droppable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4854c243499cd4772b90f5708f45f7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tag: 
   upForce: 1
   sideForce: 0.1
   shelf: {fileID: 0}
