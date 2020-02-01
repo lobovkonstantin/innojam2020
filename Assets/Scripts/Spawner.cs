@@ -33,8 +33,7 @@ public class Spawner : MonoBehaviour
     {
         foreach(SpawnPoint spawnPoint in spawnPoints) {
             if (spawnPoint.slotIsEmpty) {
-                string tag = Random.value < 0.5f ? "glass" : "glass2";
-                pooler.SpawnFromPool(tag, spawnPoint.position, Quaternion.identity);
+                pooler.SpawnFromPool(pooler.tags[Random.Range(0, pooler.tags.Count)], spawnPoint.position, Quaternion.identity);
                 spawnPoint.slotIsEmpty = false;
             }
         }
