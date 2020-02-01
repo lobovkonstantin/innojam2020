@@ -110,6 +110,7 @@ public class CatControl : MonoBehaviour
             if (myvase != null)
             {
                 myvase.DropObject();
+                Spawner.Instance.OnItemDropped(myvase.index);
             }
 
             anim.SetBool("pushing", true);
