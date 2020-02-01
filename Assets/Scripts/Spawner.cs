@@ -14,26 +14,46 @@ public class Spawner : MonoBehaviour
     {
         public Vector2 position;
         public bool slotIsEmpty;
+        public int index;
         public float timer;
     }
 
+    public static Spawner Instance;
+
     void Start()
     {
+        Instance = this;
+        int i = 0;
         spawnPoints = new List<SpawnPoint>();
         foreach(Transform child in transform) {
             SpawnPoint spawnPoint = new SpawnPoint();
             spawnPoint.position = child.transform.position;
             spawnPoint.slotIsEmpty = true;
+            spawnPoint.index = i;
             spawnPoints.Add(spawnPoint);
+            i++;
         }
         pooler = ObjectPooler.Instance;
+    }
+
+    public void OnItemDropped(int index) {
+        foreach(SpawnPoint spawnPoint in spawnPoints) {
+            if (spawnPoint.index == index) {
+                spawnPoint.slotIsEmpty = true;
+                spawnPoint.timer = 5;
+            }
+        }
     }
     // Update is called once per frame
     void FixedUpdate()
     {
         foreach(SpawnPoint spawnPoint in spawnPoints) {
             if (spawnPoint.slotIsEmpty) {
-                pooler.SpawnFromPool(pooler.tags[Random.Range(0, pooler.tags.Count)], spawnPoint.position, Quaternion.identity);
+                if (spawnPoint.timer > 0) {
+                    spawnPoint.timer -= Time.fixedDeltaTime;
+                    return;
+                }
+                pooler.SpawnFromPool(pooler.tags[Random.Range(0, pooler.tags.Count)], spawnPoint.position, Quaternion.identity, spawnPoint.index);
                 spawnPoint.slotIsEmpty = false;
             }
         }
