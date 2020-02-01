@@ -33,7 +33,6 @@ public class Object : MonoBehaviour, IPooledObject
 
         Vector2 force = new Vector2(xForce, yForce);
         GetComponent<Rigidbody2D>().velocity = force;
-        Debug.Log("collision");
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shelf, true);
         itemName = NameGenerator.nameGenerate( WorldVariablesHandler.Instance.GetPredicateList(),
             WorldVariablesHandler.Instance.GetAdjectiveList1(),
@@ -49,9 +48,16 @@ public class Object : MonoBehaviour, IPooledObject
         }
     }
 
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "shelf" && !OnShelf) {
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>(), true);
+        }
+    }
+
     public void DestroyObject() {
         OnShelf = false;
-        ObjectPooler.Instance.AddToQueue("cube", gameObject);
+        ObjectPooler.Instance.AddToQueue(tag, gameObject);
         WorldVariablesHandler.Instance.nameList.Remove(itemName);
     }
 }
