@@ -19,10 +19,8 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
         spawnPoints = new List<SpawnPoint>();
         foreach(Transform child in transform) {
-            Debug.Log("Loop");
             SpawnPoint spawnPoint = new SpawnPoint();
             spawnPoint.position = child.transform.position;
             spawnPoint.slotIsEmpty = true;
@@ -33,9 +31,7 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(spawnPoints.Count);
         foreach(SpawnPoint spawnPoint in spawnPoints) {
-            Debug.Log("xx");
             if (spawnPoint.slotIsEmpty) {
                 string tag = Random.value < 0.5f ? "glass" : "glass2";
                 pooler.SpawnFromPool(tag, spawnPoint.position, Quaternion.identity);

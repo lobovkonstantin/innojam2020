@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2900616450105357747}
   m_Layer: 0
   m_Name: glass2
-  m_TagString: Untagged
+  m_TagString: droppable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +98,7 @@ MonoBehaviour:
   upForce: 1
   sideForce: 0.15
   shelf: {fileID: 0}
+  itemName: 
 --- !u!50 &7517786596482108220
 Rigidbody2D:
   serializedVersion: 4

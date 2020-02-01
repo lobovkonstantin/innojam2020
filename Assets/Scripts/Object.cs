@@ -50,7 +50,7 @@ public class Object : MonoBehaviour, IPooledObject
 
     public void DestroyObject() {
         OnShelf = false;
-        ObjectPooler.Instance.AddToQueue("cube", gameObject);
+        ObjectPooler.Instance.AddToQueue(tag, gameObject);
         WorldVariablesHandler.Instance.nameList.Remove(itemName);
     }
 }
