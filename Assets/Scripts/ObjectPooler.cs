@@ -50,6 +50,7 @@ public class ObjectPooler : MonoBehaviour
         if (pooled != null) {
             pooled.index = index;
             pooled.OnObjectSpawn();
+
         }
 
         return pooled;

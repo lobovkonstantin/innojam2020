@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class Object : MonoBehaviour, IPooledObject
 {
     public int index { get; set; }
+
     public string tag;
     public bool OnShelf { get; set; }
 
@@ -16,17 +17,12 @@ public class Object : MonoBehaviour, IPooledObject
 
     public Collider2D shelf;
 
-    private String itemName;
+    public string itemName { get; set; }
 
     void Start()
     {
         shelf = GameObject.FindGameObjectWithTag("shelf").GetComponent<Collider2D>();
-        itemName = NameGenerator.nameGenerate( WorldVariablesHandler.Instance.GetPredicateList(),
-            WorldVariablesHandler.Instance.GetAdjectiveList1(),
-            WorldVariablesHandler.Instance.GetAdjectiveList2(),
-            tag);
-        WorldVariablesHandler.Instance.nameList.AddLast(itemName);
-        Debug.Log(itemName);
+
     }
 
     public void OnObjectSpawn() {
@@ -58,13 +54,29 @@ public class Object : MonoBehaviour, IPooledObject
         if (other.gameObject.tag == "shelf" && !OnShelf) {
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>(), true);
         }
-        if (other.gameObject.tag == "floor") {
+        if (other.gameObject.tag == "floor" && itemName == null) {
 
+            itemName = NameGenerator.nameGenerate(WorldVariablesHandler.Instance.GetPredicateList(),
+                WorldVariablesHandler.Instance.GetAdjectiveList1(),
+                WorldVariablesHandler.Instance.GetAdjectiveList2(),
+                tag);
+
+            while (WorldVariablesHandler.Instance.itemDictionary.ContainsKey(itemName))
+            {
+                itemName = NameGenerator.nameGenerate(WorldVariablesHandler.Instance.GetPredicateList(),
+                    WorldVariablesHandler.Instance.GetAdjectiveList1(),
+                    WorldVariablesHandler.Instance.GetAdjectiveList2(),
+                    tag);
+            }
+            WorldVariablesHandler.Instance.nameList.AddLast(itemName);
+            WorldVariablesHandler.Instance.itemDictionary.Add(itemName, this);
+            Debug.Log(itemName);
         }
     }
 
     public void DestroyObject() {
         OnShelf = false;
+        itemName = null;
         ObjectPooler.Instance.AddToQueue(tag, gameObject);
         WorldVariablesHandler.Instance.nameList.Remove(itemName);
     }

@@ -30,8 +30,16 @@ public class TextBoxBehaviour : MonoBehaviour
              if (WorldVariablesHandler.Instance.nameList.Contains(userAnswer))
              {
                  Debug.Log("Item has been repaired!");
-                 GetComponent<InputField>().text = "";
+
+
+                 WorldVariablesHandler.Instance.itemDictionary[userAnswer].DestroyObject();
+
+                 WorldVariablesHandler.Instance.itemDictionary.Remove(userAnswer);
+
+                 WorldVariablesHandler.Instance.nameList.Remove(userAnswer);
+
              }
+             GetComponent<InputField>().text = "";
          }
     }
 }
