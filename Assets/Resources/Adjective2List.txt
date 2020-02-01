@@ -1,0 +1,15 @@
+red
+white
+blue
+green
+ultramarine
+black
+yellow
+purple
+metal 
+round 
+orange
+orange
+avocado
+iron
+nickel
