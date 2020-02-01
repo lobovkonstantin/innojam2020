@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class CatControl : MonoBehaviour
 {
+
+    private const int DEFAULT_SPEED = 2;
+    private const float DEFAULT_RAY_LENGTH = 5f;
+    private ArrayList UNPASSABLE_OBJECT_TAGS = new ArrayList(new string[] { "wall" });
+
     //fields
     public int direction;//1 - right;
     public int speed;
     public bool movingRight = true;
     public bool stopMove;
     public bool isOnUpperShelf = true;
-    public float delay = 0f;
+    public float delay = 2f;
     public float timeToNextJump;
     public float collisionDisablingTime = 0f;
-    public Grounds currentGround = Grounds.UpperShelf;
+    public float rayLength = DEFAULT_RAY_LENGTH;
 
-    private bool BlockJumpUnderGround = false;
     private Rigidbody2D rb;
     private Animator anim;
     int catLayer, floorLayer;
@@ -25,7 +29,7 @@ public class CatControl : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         direction = 1;
-        speed = 2;
+        speed = DEFAULT_SPEED;
         stopMove = false;
         anim = GetComponent<Animator>();
 
@@ -38,6 +42,7 @@ public class CatControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.localScale.x * Vector2.right, rayLength);
         if (collisionDisablingTime <= 0)
         {
             setIgnoringShelfCollisions(false);
@@ -64,18 +69,22 @@ public class CatControl : MonoBehaviour
         timeToNextJump -= Time.deltaTime;
         if (timeToNextJump <= 0) 
         {
-            setIgnoringShelfCollisions(true);
             timeToNextJump = Random.Range(1, 10);
-            if (isOnUpperShelf)
+            if (!UNPASSABLE_OBJECT_TAGS.Contains(hit.collider.tag))
             {
-                collisionDisablingTime = 0.5f;
+                setIgnoringShelfCollisions(true);
+                
+                if (isOnUpperShelf)
+                {
+                    collisionDisablingTime = 0.5f;
+                }
+                else
+                {
+                    collisionDisablingTime = 1f;
+                    rb.velocity = Vector2.up * 7.5f;
+                }
+                isOnUpperShelf = !isOnUpperShelf;
             }
-            else {
-                collisionDisablingTime = 1f;
-                rb.velocity = Vector2.up * 8.5f;
-            }
-            isOnUpperShelf = !isOnUpperShelf;
-
         }
     }
 
@@ -98,12 +107,6 @@ public class CatControl : MonoBehaviour
 
             anim.SetBool("pushing", true);
         }
-        if(collision.gameObject.name=="Ground")
-        {
-            BlockJumpUnderGround = true;
-            currentGround = Grounds.Floor;
-        }
-        else { BlockJumpUnderGround = false; }
 
     }
 
@@ -117,23 +120,20 @@ public class CatControl : MonoBehaviour
     {
         if (value) 
         {
-            Debug.Log("Ignore collisions!");
+            // Debug.Log("Ignore collisions!");
             Physics2D.IgnoreLayerCollision(catLayer, floorLayer, true);
         }
         else
         {
-            Debug.Log("Stop ignoring collisions!");
+            // Debug.Log("Stop ignoring collisions!");
             Physics2D.IgnoreLayerCollision(catLayer, floorLayer, false);
         }
         
     }
 
-    public enum Grounds
+    private void OnDrawGizmos()
     {
-        UpperShelf,
-        LowerShelf,
-        Table,
-        Floor,
-        WindowSilk
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + transform.localScale.x * Vector3.right * rayLength);
     }
 }
