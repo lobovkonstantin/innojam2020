@@ -13,7 +13,9 @@ public class CatControl : MonoBehaviour
     public float delay = 0f;
     public float timeToNextJump;
     public float collisionDisablingTime = 0f;
+    public Grounds currentGround = Grounds.UpperShelf;
 
+    private bool BlockJumpUnderGround = false;
     private Rigidbody2D rb;
     private Animator anim;
     int catLayer, floorLayer;
@@ -36,7 +38,6 @@ public class CatControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (collisionDisablingTime <= 0)
         {
             setIgnoringShelfCollisions(false);
@@ -71,7 +72,7 @@ public class CatControl : MonoBehaviour
             }
             else {
                 collisionDisablingTime = 1f;
-                rb.velocity = Vector2.up * 7.5f;
+                rb.velocity = Vector2.up * 8.5f;
             }
             isOnUpperShelf = !isOnUpperShelf;
 
@@ -97,6 +98,12 @@ public class CatControl : MonoBehaviour
 
             anim.SetBool("pushing", true);
         }
+        if(collision.gameObject.name=="Ground")
+        {
+            BlockJumpUnderGround = true;
+            currentGround = Grounds.Floor;
+        }
+        else { BlockJumpUnderGround = false; }
 
     }
 
@@ -110,14 +117,23 @@ public class CatControl : MonoBehaviour
     {
         if (value) 
         {
-            // Debug.Log("Ignore collisions!");
+            Debug.Log("Ignore collisions!");
             Physics2D.IgnoreLayerCollision(catLayer, floorLayer, true);
         }
         else
         {
-            // Debug.Log("Stop ignoring collisions!");
+            Debug.Log("Stop ignoring collisions!");
             Physics2D.IgnoreLayerCollision(catLayer, floorLayer, false);
         }
         
+    }
+
+    public enum Grounds
+    {
+        UpperShelf,
+        LowerShelf,
+        Table,
+        Floor,
+        WindowSilk
     }
 }
