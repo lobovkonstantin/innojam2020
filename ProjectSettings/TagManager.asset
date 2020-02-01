@@ -7,12 +7,7 @@ TagManager:
   - shelf
   - droppable
   - wall
-  - uppershelf
-  - lowershelf
-  - table
-  - ground
-  - windowsilk
-  - cat
+  - floor
   layers:
   - Default
   - TransparentFX
