@@ -35,11 +35,11 @@ public class Object : MonoBehaviour, IPooledObject
         GetComponent<Rigidbody2D>().velocity = force;
         Debug.Log("collision");
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shelf, true);
-        String itemName = NameGenerator.nameGenerate( 
-            WorldVariablesHandler.Instance.GetPredicateList(),
+        itemName = NameGenerator.nameGenerate( WorldVariablesHandler.Instance.GetPredicateList(),
             WorldVariablesHandler.Instance.GetAdjectiveList1(),
             WorldVariablesHandler.Instance.GetAdjectiveList2(),
             tag);
+        WorldVariablesHandler.Instance.nameList.AddLast(itemName);
     }
 
     void Update()
