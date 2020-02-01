@@ -235,6 +235,7 @@ MonoBehaviour:
   delay: 0
   timeToNextJump: 0
   collisionDisablingTime: 0
+  rayLength: 5
 --- !u!50 &59432634
 Rigidbody2D:
   serializedVersion: 4
@@ -1138,7 +1139,7 @@ PrefabInstance:
     - target: {fileID: 17551248632562854, guid: ba6ec2d6bc9f0db4b868f72140992f17,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.49
+      value: 9.28
       objectReference: {fileID: 0}
     - target: {fileID: 17551248632562854, guid: ba6ec2d6bc9f0db4b868f72140992f17,
         type: 3}
