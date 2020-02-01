@@ -27,7 +27,6 @@ public class Object : MonoBehaviour, IPooledObject
 
         Vector2 force = new Vector2(xForce, yForce);
         GetComponent<Rigidbody2D>().velocity = force;
-        Debug.Log("collision");
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shelf, true);
     }
 
@@ -39,8 +38,7 @@ public class Object : MonoBehaviour, IPooledObject
     }
 
     public void DestroyObject() {
-        OnShelf = false;
-        ObjectPooler.Instance.AddToQueue("cube", gameObject);
+        ObjectPooler.Instance.AddToQueue(tag, gameObject);
 
     }
 }
