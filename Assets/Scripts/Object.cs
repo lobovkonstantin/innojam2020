@@ -86,6 +86,11 @@ public class Object : MonoBehaviour, IPooledObject
             WorldVariablesHandler.Instance.itemDictionary.Add(itemName, this);
             Debug.Log(itemName);
         }
+        if(other.gameObject.tag=="ground")
+        {
+            Debug.Log("sound!");
+            GetComponent<AudioSource>().Play();
+        }
     }
 
     public void DestroyObject() {

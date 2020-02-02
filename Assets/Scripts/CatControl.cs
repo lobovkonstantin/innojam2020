@@ -21,7 +21,8 @@ public class CatControl : MonoBehaviour
     public float collisionDisablingTime = 0f;
     public float rayLength = DEFAULT_RAY_LENGTH;
     public bool isJumping = false;
-
+    public AudioClip say_meow;
+    public AudioClip say_murmur;
     public Floors currentFloor;
 
     private Rigidbody2D rb;
@@ -45,6 +46,9 @@ public class CatControl : MonoBehaviour
         Physics2D.IgnoreLayerCollision(catLayer, droppablesLayer, true);
 
         timeToNextJump = Random.Range(1, 10);
+        //sounds
+        say_meow= GetComponent<AudioClip>();
+        say_murmur= GetComponent<AudioClip>();
     }
 
     // Update is called once per frame
@@ -90,7 +94,6 @@ public class CatControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         switch (collision.gameObject.tag) 
         {
             case "uppershelf": currentFloor = Floors.UPPER_SHELF; resetMovement(); break;
@@ -211,10 +214,10 @@ public class CatControl : MonoBehaviour
         switch (strategy) 
         {
             case JumpStrategy.DOWN: collisionDisablingTime = 0.5f; break;
-            case JumpStrategy.NORMAL_UP: collisionDisablingTime = 1f; rb.velocity = Vector2.up * 7.5f; break;
-            case JumpStrategy.HIGH_UP: collisionDisablingTime = 1.3f; rb.velocity = Vector2.up * 9f; break;
-            case JumpStrategy.VERY_HIGH_UP: collisionDisablingTime = 1.5f; rb.velocity = Vector2.up * 10f; break;
-            case JumpStrategy.FORWARD: rb.velocity = Vector2.up * 7f; break;
+            case JumpStrategy.NORMAL_UP: collisionDisablingTime = 1f; rb.velocity = Vector2.up * 7.5f; GetComponent<AudioSource>().Play(); break;
+            case JumpStrategy.HIGH_UP: collisionDisablingTime = 1.3f; rb.velocity = Vector2.up * 9f; GetComponent<AudioSource>().Play(); break;
+            case JumpStrategy.VERY_HIGH_UP: collisionDisablingTime = 1.5f; rb.velocity = Vector2.up * 10f; GetComponent<AudioSource>().Play(); break;
+            case JumpStrategy.FORWARD:  rb.velocity = Vector2.up * 7f; GetComponent<AudioSource>().Play(); break;
         }
     }
 
