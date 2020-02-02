@@ -28,12 +28,6 @@ public class Object : MonoBehaviour, IPooledObject
         lowershelf = GameObject.FindGameObjectWithTag("lowershelf").GetComponent<Collider2D>();
         table = GameObject.FindGameObjectWithTag("table").GetComponent<Collider2D>();
         windowsilk = GameObject.FindGameObjectWithTag("windowsilk").GetComponent<Collider2D>();
-        itemName = NameGenerator.nameGenerate( WorldVariablesHandler.Instance.GetPredicateList(),
-            WorldVariablesHandler.Instance.GetAdjectiveList1(),
-            WorldVariablesHandler.Instance.GetAdjectiveList2(),
-            tag);
-        WorldVariablesHandler.Instance.nameList.AddLast(itemName);
-        Debug.Log(itemName);
     }
 
     public void OnObjectSpawn() {
