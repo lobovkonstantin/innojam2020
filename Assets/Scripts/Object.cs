@@ -68,7 +68,6 @@ public class Object : MonoBehaviour, IPooledObject
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>(), true);
         }
         if (other.gameObject.tag == "floor" && itemName == null) {
-            Debug.Log("SSSSSS");
             itemName = NameGenerator.nameGenerate(WorldVariablesHandler.Instance.GetPredicateList(),
                 WorldVariablesHandler.Instance.GetAdjectiveList1(),
                 WorldVariablesHandler.Instance.GetAdjectiveList2(),
@@ -92,5 +91,6 @@ public class Object : MonoBehaviour, IPooledObject
         ObjectPooler.Instance.AddToQueue(tag, gameObject);
         WorldVariablesHandler.Instance.nameList.Remove(itemName);
         objectCanvas.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "";
+        Debug.Log("Destroyed");
     }
 }
