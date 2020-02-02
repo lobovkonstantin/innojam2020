@@ -178,7 +178,6 @@ public class CatControl : MonoBehaviour
     {
         setIgnoringShelfCollisions(true);
         JumpStrategy jumpStrategy = getJumpStrategy();
-        Debug.Log("Jump Strategy: " + jumpStrategy.ToString());
         startJumpForStrategy(jumpStrategy);
         if (jumpStrategy != JumpStrategy.NONE) {
             isJumping = true;
@@ -265,7 +264,6 @@ public class CatControl : MonoBehaviour
         isBrushDropped = true;
         GameObject.FindGameObjectWithTag("brush").GetComponent<Rigidbody2D>().AddTorque(100f);
         isBrushTorqueAdded = true;
-        Debug.Log("dropping brush!");
     }
 
     private bool shouldDropDeadHead()
@@ -280,7 +278,6 @@ public class CatControl : MonoBehaviour
         delay = 1f;
         anim.SetBool("pushing", true);
         isHeadDropped = true;
-        Debug.Log("dropping dead head!");
         Physics2D.IgnoreLayerCollision(deadHeadShelfLayer, headLayer, true);
     }
 
