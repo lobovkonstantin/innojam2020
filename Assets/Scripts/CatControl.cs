@@ -216,7 +216,7 @@ public class CatControl : MonoBehaviour
             case JumpStrategy.NORMAL_UP: collisionDisablingTime = 1f; rb.velocity = Vector2.up * 7.5f; break;
             case JumpStrategy.HIGH_UP: collisionDisablingTime = 1.3f; rb.velocity = Vector2.up * 9f; break;
             case JumpStrategy.VERY_HIGH_UP: collisionDisablingTime = 1.5f; rb.velocity = Vector2.up * 10f; break;
-            case JumpStrategy.FORWARD: rb.velocity = Vector2.up * 6f; break;
+            case JumpStrategy.FORWARD: rb.velocity = Vector2.up * 7f; break;
         }
     }
 
