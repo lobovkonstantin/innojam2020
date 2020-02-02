@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using Random = UnityEngine.Random;
 
 public class Object : MonoBehaviour, IPooledObject
 {
+    public Canvas objectCanvasPrefab;
+    public Canvas objectCanvas;
     public int index { get; set; }
     public string tag;
     public bool OnShelf { get; set; }
@@ -21,11 +24,14 @@ public class Object : MonoBehaviour, IPooledObject
     void Start()
     {
         shelf = GameObject.FindGameObjectWithTag("shelf").GetComponent<Collider2D>();
+        objectCanvas = Instantiate(objectCanvasPrefab, transform.position, Quaternion.identity);
+
         itemName = NameGenerator.nameGenerate( WorldVariablesHandler.Instance.GetPredicateList(),
             WorldVariablesHandler.Instance.GetAdjectiveList1(),
             WorldVariablesHandler.Instance.GetAdjectiveList2(),
             tag);
         WorldVariablesHandler.Instance.nameList.AddLast(itemName);
+        objectCanvas.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = itemName;
         Debug.Log(itemName);
     }
 
@@ -50,6 +56,7 @@ public class Object : MonoBehaviour, IPooledObject
     {
         if (!OnShelf) {
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -2f));
+            objectCanvas.gameObject.transform.position = new Vector2(transform.position.x, transform.position.y + 0.8f);
         }
     }
 
