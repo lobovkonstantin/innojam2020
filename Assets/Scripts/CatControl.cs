@@ -7,7 +7,7 @@ public class CatControl : MonoBehaviour
 
     private const int DEFAULT_SPEED = 2;
     private const float DEFAULT_RAY_LENGTH = 5f;
-    private const Floors STARTING_FLOOR = Floors.WINDOW_SILK;
+    private const Floors STARTING_FLOOR = Floors.GROUND;
 
     private ArrayList UNPASSABLE_OBJECT_TAGS = new ArrayList(new string[] { "wall" });
 
@@ -21,13 +21,17 @@ public class CatControl : MonoBehaviour
     public float collisionDisablingTime = 0f;
     public float rayLength = DEFAULT_RAY_LENGTH;
     public bool isJumping = false;
+    public bool isBrushDropped = false;
+    public bool isHeadDropped = false;
+    public bool isBrushTorqueAdded = false;
+
     public AudioClip say_meow;
     public AudioClip say_murmur;
     public Floors currentFloor;
 
     private Rigidbody2D rb;
     private Animator anim;
-    int catLayer, floorLayer, droppablesLayer;
+    int catLayer, floorLayer, droppablesLayer, headLayer, brushLayer, deadHeadShelfLayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,8 +46,18 @@ public class CatControl : MonoBehaviour
         catLayer = LayerMask.NameToLayer("CatLayer");
         floorLayer = LayerMask.NameToLayer("Default");
         droppablesLayer = LayerMask.NameToLayer("Droppables");
+        brushLayer = LayerMask.NameToLayer("Brush");
+        headLayer = LayerMask.NameToLayer("Head");
+        deadHeadShelfLayer = LayerMask.NameToLayer("DeadHeadShelf");
 
         Physics2D.IgnoreLayerCollision(catLayer, droppablesLayer, true);
+        Physics2D.IgnoreLayerCollision(catLayer, brushLayer, true);
+        Physics2D.IgnoreLayerCollision(catLayer, headLayer, true);
+        Physics2D.IgnoreLayerCollision(droppablesLayer, brushLayer, true);
+        Physics2D.IgnoreLayerCollision(droppablesLayer, headLayer, true);
+        Physics2D.IgnoreLayerCollision(floorLayer, brushLayer, true);
+        Physics2D.IgnoreLayerCollision(floorLayer, headLayer, false);
+        Physics2D.IgnoreLayerCollision(deadHeadShelfLayer, headLayer, false);
 
         timeToNextJump = Random.Range(1, 10);
         //sounds
@@ -71,6 +85,11 @@ public class CatControl : MonoBehaviour
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
             anim.SetBool("pushing", false);
+            if (isBrushTorqueAdded) 
+            {
+                GameObject.FindGameObjectWithTag("brush").GetComponent<Rigidbody2D>().AddTorque(-100f);
+                isBrushTorqueAdded = false;
+            }
         }
         else
         {
@@ -89,6 +108,13 @@ public class CatControl : MonoBehaviour
         }
         if (currentFloor == Floors.TABLE && transform.position.x < 1f && !isJumping && !movingRight) {
             jump();
+        }
+        if (shouldDropBrush()) {
+            dropBrush();
+        }
+        if (shouldDropDeadHead()) 
+        {
+            dropDeadHead();
         }
     }
 
@@ -110,7 +136,6 @@ public class CatControl : MonoBehaviour
 
         if (collision.gameObject.tag == "droppable")
         {
-            Debug.Log("Collided with a droppable!");
             collision.gameObject.layer = LayerMask.NameToLayer("Droppables");
             delay = 1f;
 
@@ -165,14 +190,13 @@ public class CatControl : MonoBehaviour
     }
 
     private JumpStrategy getJumpStrategy() {
-        bool randomBool = Random.Range(0, 10) > 5;
         float catX = transform.position.x;
         switch (currentFloor) {
             case Floors.UPPER_SHELF: return JumpStrategy.DOWN;
-            case Floors.LOWER_SHELF: return randomBool ? JumpStrategy.NORMAL_UP : JumpStrategy.DOWN;
-            case Floors.TABLE: return getJumpStrategyFromTable(randomBool, catX);
+            case Floors.LOWER_SHELF: return randomBool() ? JumpStrategy.NORMAL_UP : JumpStrategy.DOWN;
+            case Floors.TABLE: return getJumpStrategyFromTable(randomBool(), catX);
             case Floors.WINDOW_SILK: return JumpStrategy.DOWN;
-            case Floors.GROUND: return getJumpStrategyFromGround(randomBool, catX);
+            case Floors.GROUND: return getJumpStrategyFromGround(randomBool(), catX);
         }
         return JumpStrategy.NONE;
     }
@@ -225,6 +249,43 @@ public class CatControl : MonoBehaviour
     {
         speed = DEFAULT_SPEED;
         isJumping = false;
+    }
+
+    private bool randomBool() {
+        return Random.Range(0, 10) > 5;
+    }
+
+    private bool shouldDropBrush() 
+    {
+        return currentFloor == Floors.GROUND && !isJumping && !isBrushDropped
+            && ((transform.position.x > -4.80f && transform.position.x < -4.35f && movingRight) || (transform.position.x < -2.60f && transform.position.x > -3f && !movingRight))
+            && randomBool();
+    }
+
+    private void dropBrush() 
+    {
+        delay = 1f;
+        anim.SetBool("pushing", true);
+        isBrushDropped = true;
+        GameObject.FindGameObjectWithTag("brush").GetComponent<Rigidbody2D>().AddTorque(100f);
+        isBrushTorqueAdded = true;
+        Debug.Log("dropping brush!");
+    }
+
+    private bool shouldDropDeadHead()
+    {
+        return currentFloor == Floors.GROUND && !isJumping && !isHeadDropped
+            && (transform.position.x > -6.80f && transform.position.x < -4.80f)
+            && randomBool();
+    }
+
+    private void dropDeadHead() 
+    {
+        delay = 1f;
+        anim.SetBool("pushing", true);
+        isHeadDropped = true;
+        Debug.Log("dropping dead head!");
+        Physics2D.IgnoreLayerCollision(deadHeadShelfLayer, headLayer, true);
     }
 
     public enum Floors
