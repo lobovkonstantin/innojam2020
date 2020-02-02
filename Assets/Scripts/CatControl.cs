@@ -106,7 +106,7 @@ public class CatControl : MonoBehaviour
                 jump();
             }
         }
-        if (currentFloor == Floors.TABLE && transform.position.x < 1f && !isJumping && !movingRight) {
+        if (currentFloor == Floors.TABLE && transform.position.x < 1.9f && !isJumping && !movingRight) {
             jump();
         }
         if (shouldDropBrush()) {
@@ -125,7 +125,7 @@ public class CatControl : MonoBehaviour
             case "uppershelf": currentFloor = Floors.UPPER_SHELF; resetMovement(); break;
             case "lowershelf": currentFloor = Floors.LOWER_SHELF; resetMovement(); break;
             case "table": currentFloor = Floors.TABLE; resetMovement(); break;
-            case "ground": currentFloor = Floors.GROUND; resetMovement(); break;
+            case "floor": currentFloor = Floors.GROUND; resetMovement(); break;
             case "windowsilk": currentFloor = Floors.WINDOW_SILK; resetMovement(); break;
         }
 
@@ -186,6 +186,7 @@ public class CatControl : MonoBehaviour
         if (jumpStrategy != JumpStrategy.NONE) {
             isJumping = true;
         }
+        Debug.Log("Strategy " + jumpStrategy + " to jump from " + currentFloor);
     }
 
     private JumpStrategy getJumpStrategy() {
@@ -205,7 +206,7 @@ public class CatControl : MonoBehaviour
         {
             return randomBool ? JumpStrategy.NORMAL_UP : JumpStrategy.DOWN;
         }
-        else if (catX <= 1f && !movingRight) 
+        else if (catX <= 1.9f && !movingRight) 
         {
             return randomBool ? JumpStrategy.FORWARD : JumpStrategy.DOWN;
         }

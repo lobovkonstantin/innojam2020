@@ -68,7 +68,7 @@ public class Object : MonoBehaviour, IPooledObject
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>(), true);
         }
         if (other.gameObject.tag == "floor" && itemName == null) {
-            Debug.Log("SSSSSS");
+            //Debug.Log("SSSSSS");
             itemName = NameGenerator.nameGenerate(WorldVariablesHandler.Instance.GetPredicateList(),
                 WorldVariablesHandler.Instance.GetAdjectiveList1(),
                 WorldVariablesHandler.Instance.GetAdjectiveList2(),
@@ -86,7 +86,7 @@ public class Object : MonoBehaviour, IPooledObject
         }
         if(other.gameObject.tag=="floor")
         {
-            Debug.Log("sound!");
+            //Debug.Log("sound!");
             GetComponent<AudioSource>().Play();
         }
     }
