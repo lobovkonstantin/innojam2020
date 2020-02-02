@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4854c243499cd4772b90f5708f45f7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tag: 
+  tag: lighter
   upForce: 1
   sideForce: 0.15
   uppershelf: {fileID: 0}

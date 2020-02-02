@@ -26,7 +26,6 @@ public class TextBoxBehaviour : MonoBehaviour
          if (GetComponent<InputField>().isFocused && GetComponent<InputField>().text != "" && Input.GetKey(KeyCode.Return))
          {
              String userAnswer = GetComponent<InputField>().text;
-             Debug.Log(userAnswer);
              if (WorldVariablesHandler.Instance.nameList.Contains(userAnswer))
              {
                  Debug.Log("Item has been repaired!");
@@ -38,6 +37,10 @@ public class TextBoxBehaviour : MonoBehaviour
 
                  WorldVariablesHandler.Instance.nameList.Remove(userAnswer);
 
+             }
+             else
+             {
+                 Debug.Log("NOOOOOOOB!!!!!!!!!!!!! MEOOOOOOOOOOW!!!!!!!!!");
              }
              GetComponent<InputField>().text = "";
          }
