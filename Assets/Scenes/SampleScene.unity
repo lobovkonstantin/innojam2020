@@ -1865,11 +1865,11 @@ MonoBehaviour:
     prefab: {fileID: 1750944443765338334, guid: 1b6d4ec7ccc474de3ab13dbd1c115877,
       type: 3}
     size: 5
-  - tag: pumpkin
+  - tag: head
     prefab: {fileID: 7881177672193688955, guid: a17e08761d0a8c64a8009529434dc3a1,
       type: 3}
     size: 3
-  - tag: Lighter
+  - tag: lighter
     prefab: {fileID: 3379050521736139814, guid: bab2945ba070b944785ea74e81d43416,
       type: 3}
     size: 4
