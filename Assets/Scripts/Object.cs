@@ -32,13 +32,6 @@ public class Object : MonoBehaviour, IPooledObject
         lowershelf = GameObject.FindGameObjectWithTag("lowershelf").GetComponent<Collider2D>();
         table = GameObject.FindGameObjectWithTag("table").GetComponent<Collider2D>();
         windowsilk = GameObject.FindGameObjectWithTag("windowsilk").GetComponent<Collider2D>();
-        itemName = NameGenerator.nameGenerate( WorldVariablesHandler.Instance.GetPredicateList(),
-            WorldVariablesHandler.Instance.GetAdjectiveList1(),
-            WorldVariablesHandler.Instance.GetAdjectiveList2(),
-            tag);
-        WorldVariablesHandler.Instance.nameList.AddLast(itemName);
-        objectCanvas.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = itemName;
-        Debug.Log(itemName);
     }
 
     public void OnObjectSpawn() {
@@ -75,12 +68,12 @@ public class Object : MonoBehaviour, IPooledObject
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>(), true);
         }
         if (other.gameObject.tag == "floor" && itemName == null) {
-
+            Debug.Log("SSSSSS");
             itemName = NameGenerator.nameGenerate(WorldVariablesHandler.Instance.GetPredicateList(),
                 WorldVariablesHandler.Instance.GetAdjectiveList1(),
                 WorldVariablesHandler.Instance.GetAdjectiveList2(),
                 tag);
-
+            objectCanvas.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = itemName;
             while (WorldVariablesHandler.Instance.itemDictionary.ContainsKey(itemName))
             {
                 itemName = NameGenerator.nameGenerate(WorldVariablesHandler.Instance.GetPredicateList(),
@@ -90,7 +83,6 @@ public class Object : MonoBehaviour, IPooledObject
             }
             WorldVariablesHandler.Instance.nameList.AddLast(itemName);
             WorldVariablesHandler.Instance.itemDictionary.Add(itemName, this);
-            Debug.Log(itemName);
         }
     }
 
@@ -99,5 +91,6 @@ public class Object : MonoBehaviour, IPooledObject
         itemName = null;
         ObjectPooler.Instance.AddToQueue(tag, gameObject);
         WorldVariablesHandler.Instance.nameList.Remove(itemName);
+        objectCanvas.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "";
     }
 }
