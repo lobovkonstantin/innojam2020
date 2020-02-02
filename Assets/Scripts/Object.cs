@@ -84,7 +84,7 @@ public class Object : MonoBehaviour, IPooledObject
             WorldVariablesHandler.Instance.nameList.AddLast(itemName);
             WorldVariablesHandler.Instance.itemDictionary.Add(itemName, this);
         }
-        if(other.gameObject.tag=="floor")
+        if(other.gameObject.tag=="ground")
         {
             //Debug.Log("sound!");
             GetComponent<AudioSource>().Play();
@@ -97,5 +97,6 @@ public class Object : MonoBehaviour, IPooledObject
         ObjectPooler.Instance.AddToQueue(tag, gameObject);
         WorldVariablesHandler.Instance.nameList.Remove(itemName);
         objectCanvas.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "";
+        Debug.Log("Destroyed");
     }
 }

@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1255,8 +1255,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000024229, y: 171}
-  m_SizeDelta: {x: 506.88, y: 77.47}
+  m_AnchoredPosition: {x: -16.5, y: 171}
+  m_SizeDelta: {x: 229.8, y: 77.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &755341925
 MonoBehaviour:
@@ -1518,7 +1518,7 @@ GameObject:
   - component: {fileID: 1244277742}
   m_Layer: 9
   m_Name: Ground
-  m_TagString: floor
+  m_TagString: ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1857,23 +1857,23 @@ MonoBehaviour:
     prefab: {fileID: 2721195584597324813, guid: c68b936c7df0445ec80e6dee46a931ad,
       type: 3}
     size: 10
-  - tag: bottle
+  - tag: blue potion
     prefab: {fileID: 2430327067741356379, guid: e8bccbc3d777aa54b9ae9e59e239d5c1,
       type: 3}
     size: 5
-  - tag: glass2
+  - tag: pink potion
     prefab: {fileID: 1750944443765338334, guid: 1b6d4ec7ccc474de3ab13dbd1c115877,
       type: 3}
     size: 5
-  - tag: pumpkin
+  - tag: head
     prefab: {fileID: 7881177672193688955, guid: a17e08761d0a8c64a8009529434dc3a1,
       type: 3}
     size: 3
-  - tag: Lighter
+  - tag: lighter
     prefab: {fileID: 3379050521736139814, guid: bab2945ba070b944785ea74e81d43416,
       type: 3}
     size: 4
-  - tag: bottle1
+  - tag: bottle
     prefab: {fileID: 1107988563162466669, guid: ca25b9b18bca00d4591893599f09906f,
       type: 3}
     size: 4
@@ -2021,8 +2021,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000011444, y: 171}
-  m_SizeDelta: {x: 678.1, y: 150.7}
+  m_AnchoredPosition: {x: -18, y: 171}
+  m_SizeDelta: {x: 306.3, y: 150.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1737365893
 MonoBehaviour:

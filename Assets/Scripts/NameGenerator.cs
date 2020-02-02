@@ -14,7 +14,7 @@ public  class NameGenerator
 
         if (levelnumber <= 10)
         {
-            itemName = tag + " " + Random.Range(0,100) ;
+            itemName = (string)AdjectiveList1[Random.Range(0, AdjectiveList1.Count)] + " " + tag ;
 
         }
 
