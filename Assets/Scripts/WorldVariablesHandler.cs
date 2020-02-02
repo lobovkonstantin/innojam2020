@@ -20,6 +20,8 @@ public  class WorldVariablesHandler : MonoBehaviour
 
     ArrayList adjectiveList2 = new ArrayList();
 
+    public Dictionary<string, IPooledObject> itemDictionary = new Dictionary<string, IPooledObject>();
+
     void Start()
     {
         time = 20f;
@@ -43,7 +45,7 @@ public  class WorldVariablesHandler : MonoBehaviour
         }
         else
         {
-            time = 20;
+            time = 3;
             NextLevel();
         }
     }
@@ -70,5 +72,8 @@ public  class WorldVariablesHandler : MonoBehaviour
         return levelNumber;
     }
 
-
+    public Dictionary<string, IPooledObject> GetitemDicionary()
+    {
+        return itemDictionary;
+    }
 }

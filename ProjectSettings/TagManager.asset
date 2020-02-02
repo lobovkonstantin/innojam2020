@@ -7,6 +7,7 @@ TagManager:
   - shelf
   - droppable
   - wall
+  - floor
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - 
   - CatLayer
   - Ground
-  - 
+  - Droppables
   - 
   - 
   - 
