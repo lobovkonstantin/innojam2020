@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using Random = UnityEngine.Random;
 
 public class Object : MonoBehaviour, IPooledObject
 {
+    public Canvas objectCanvasPrefab;
+    public Canvas objectCanvas;
     public int index { get; set; }
 
     public string tag;
@@ -24,6 +27,7 @@ public class Object : MonoBehaviour, IPooledObject
 
     void Start()
     {
+        objectCanvas = Instantiate(objectCanvasPrefab, transform.position, Quaternion.identity);
         uppershelf = GameObject.FindGameObjectWithTag("uppershelf").GetComponent<Collider2D>();
         lowershelf = GameObject.FindGameObjectWithTag("lowershelf").GetComponent<Collider2D>();
         table = GameObject.FindGameObjectWithTag("table").GetComponent<Collider2D>();
@@ -54,6 +58,7 @@ public class Object : MonoBehaviour, IPooledObject
     {
         if (!OnShelf) {
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -2f));
+            objectCanvas.gameObject.transform.position = new Vector2(transform.position.x, transform.position.y + 0.8f);
         }
     }
 
@@ -63,12 +68,11 @@ public class Object : MonoBehaviour, IPooledObject
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>(), true);
         }
         if (other.gameObject.tag == "ground" && itemName == null) {
-
             itemName = NameGenerator.nameGenerate(WorldVariablesHandler.Instance.GetPredicateList(),
                 WorldVariablesHandler.Instance.GetAdjectiveList1(),
                 WorldVariablesHandler.Instance.GetAdjectiveList2(),
                 tag);
-
+            objectCanvas.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = itemName;
             while (WorldVariablesHandler.Instance.itemDictionary.ContainsKey(itemName))
             {
                 itemName = NameGenerator.nameGenerate(WorldVariablesHandler.Instance.GetPredicateList(),
@@ -78,7 +82,11 @@ public class Object : MonoBehaviour, IPooledObject
             }
             WorldVariablesHandler.Instance.nameList.AddLast(itemName);
             WorldVariablesHandler.Instance.itemDictionary.Add(itemName, this);
-            Debug.Log(itemName);
+        }
+        if(other.gameObject.tag=="ground")
+        {
+            Debug.Log("sound!");
+            GetComponent<AudioSource>().Play();
         }
     }
 
@@ -87,5 +95,7 @@ public class Object : MonoBehaviour, IPooledObject
         itemName = null;
         ObjectPooler.Instance.AddToQueue(tag, gameObject);
         WorldVariablesHandler.Instance.nameList.Remove(itemName);
+        objectCanvas.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "";
+        Debug.Log("Destroyed");
     }
 }
