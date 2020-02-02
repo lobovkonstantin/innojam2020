@@ -1857,11 +1857,11 @@ MonoBehaviour:
     prefab: {fileID: 2721195584597324813, guid: c68b936c7df0445ec80e6dee46a931ad,
       type: 3}
     size: 10
-  - tag: bottle
+  - tag: blue potion
     prefab: {fileID: 2430327067741356379, guid: e8bccbc3d777aa54b9ae9e59e239d5c1,
       type: 3}
     size: 5
-  - tag: glass2
+  - tag: pink potion
     prefab: {fileID: 1750944443765338334, guid: 1b6d4ec7ccc474de3ab13dbd1c115877,
       type: 3}
     size: 5
@@ -1873,7 +1873,7 @@ MonoBehaviour:
     prefab: {fileID: 3379050521736139814, guid: bab2945ba070b944785ea74e81d43416,
       type: 3}
     size: 4
-  - tag: bottle1
+  - tag: bottle
     prefab: {fileID: 1107988563162466669, guid: ca25b9b18bca00d4591893599f09906f,
       type: 3}
     size: 4
