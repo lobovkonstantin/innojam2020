@@ -62,7 +62,7 @@ public class Object : MonoBehaviour, IPooledObject
         if (other.gameObject.tag == "uppershelf" && !OnShelf) {
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>(), true);
         }
-        if (other.gameObject.tag == "floor" && itemName == null) {
+        if (other.gameObject.tag == "ground" && itemName == null) {
 
             itemName = NameGenerator.nameGenerate(WorldVariablesHandler.Instance.GetPredicateList(),
                 WorldVariablesHandler.Instance.GetAdjectiveList1(),
