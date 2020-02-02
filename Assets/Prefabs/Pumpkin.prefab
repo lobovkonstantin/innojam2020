@@ -170,6 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4854c243499cd4772b90f5708f45f7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectCanvasPrefab: {fileID: 3575969803000252512, guid: f1dcc4b634aec4b6f8d02f02caf6dc1e,
+    type: 3}
+  objectCanvas: {fileID: 0}
   tag: head
   upForce: 1
   sideForce: 0.15
