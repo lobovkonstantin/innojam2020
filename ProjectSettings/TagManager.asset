@@ -8,6 +8,14 @@ TagManager:
   - droppable
   - wall
   - floor
+  - cat
+  - windowsilk
+  - ground
+  - uppershelf
+  - lowershelf
+  - table
+  - brush
+  - head
   layers:
   - Default
   - TransparentFX
@@ -20,9 +28,9 @@ TagManager:
   - CatLayer
   - Ground
   - Droppables
-  - 
-  - 
-  - 
+  - Brush
+  - Head
+  - DeadHeadShelf
   - 
   - 
   - 
