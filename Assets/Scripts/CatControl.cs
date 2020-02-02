@@ -21,6 +21,7 @@ public class CatControl : MonoBehaviour
     public float collisionDisablingTime = 0f;
     public float rayLength = DEFAULT_RAY_LENGTH;
     public bool isJumping = false;
+    public bool isBrushDropped = false;
 
     public Floors currentFloor;
 
@@ -86,6 +87,9 @@ public class CatControl : MonoBehaviour
         if (currentFloor == Floors.TABLE && transform.position.x < 1f && !isJumping && !movingRight) {
             jump();
         }
+        if (shouldDropBrush()) {
+            dropBrush();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -107,7 +111,6 @@ public class CatControl : MonoBehaviour
 
         if (collision.gameObject.tag == "droppable")
         {
-            Debug.Log("Collided with a droppable!");
             collision.gameObject.layer = LayerMask.NameToLayer("Droppables");
             delay = 1f;
 
@@ -162,14 +165,13 @@ public class CatControl : MonoBehaviour
     }
 
     private JumpStrategy getJumpStrategy() {
-        bool randomBool = Random.Range(0, 10) > 5;
         float catX = transform.position.x;
         switch (currentFloor) {
             case Floors.UPPER_SHELF: return JumpStrategy.DOWN;
-            case Floors.LOWER_SHELF: return randomBool ? JumpStrategy.NORMAL_UP : JumpStrategy.DOWN;
-            case Floors.TABLE: return getJumpStrategyFromTable(randomBool, catX);
+            case Floors.LOWER_SHELF: return randomBool() ? JumpStrategy.NORMAL_UP : JumpStrategy.DOWN;
+            case Floors.TABLE: return getJumpStrategyFromTable(randomBool(), catX);
             case Floors.WINDOW_SILK: return JumpStrategy.DOWN;
-            case Floors.GROUND: return getJumpStrategyFromGround(randomBool, catX);
+            case Floors.GROUND: return getJumpStrategyFromGround(randomBool(), catX);
         }
         return JumpStrategy.NONE;
     }
@@ -222,6 +224,25 @@ public class CatControl : MonoBehaviour
     {
         speed = DEFAULT_SPEED;
         isJumping = false;
+    }
+
+    private bool randomBool() {
+        return Random.Range(0, 10) > 5;
+    }
+
+    private bool shouldDropBrush() 
+    {
+        return currentFloor == Floors.GROUND && !isJumping && !isBrushDropped
+            && ((transform.position.x > -4.80f && transform.position.x < -4.35f && movingRight) || (transform.position.x < -2.60f && transform.position.x > -3f && !movingRight))
+            && randomBool();
+    }
+
+    private void dropBrush() 
+    {
+        delay = 1f;
+        anim.SetBool("pushing", true);
+        isBrushDropped = true;
+        Debug.Log("dropping brush!");
     }
 
     public enum Floors
